@@ -16,6 +16,13 @@ DATA_DIR.mkdir(exist_ok=True) # Ensure data directory exists, if not, create it
 def health_check(): # Simple health check endpoint
     return {"status": "ok"} # Return status ok if backend is running
 
+@app.get("/")
+def root():
+    return {
+        "service": "Enterprise Document Intelligence API",
+        "status": "running"
+    }
+
 
 
 @app.post("/upload") # Endpoint to upload PDF documents
