@@ -3,11 +3,7 @@ from fastapi import APIRouter, UploadFile, File # Import necessary FastAPI compo
 from datetime import datetime # Import datetime for timestamping uploads
 from app.services.pdf_service import extract_text_from_pdf # Import the PDF text extraction service
 
-from app.services.extractor_factory import TextExtractorFactory # Import the extractor factory to get appropriate extractor based on file type
-extractor = TextExtractorFactory.get_extractor(file.filename) # Get the appropriate extractor for the uploaded file
-extracted_data = extractor.extract(file_path) # Extract text using the selected extractor
-
-router = APIRouter() # Initialize APIRouter instance
+router = APIRouter(prefix="/api/v1") # Initialize APIRouter instance
 
 UPLOAD_DIR = "data" # Directory to save uploaded files
 os.makedirs(UPLOAD_DIR, exist_ok=True) # Ensure the upload directory exists
@@ -22,7 +18,7 @@ async def upload_document(file: UploadFile = File(...)): # Function to handle do
     extracted_data = extract_text_from_pdf(file_path) # Extract text from the uploaded PDF using the service
 
     return { # Return response with upload details and extracted data
-        "file_name": file.filename, 
+        "file_name": file.filename,
         "uploaded_at": datetime.utcnow().isoformat(),
         "pages": extracted_data["total_pages"],
         "status": "processed"
