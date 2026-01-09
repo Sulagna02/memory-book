@@ -1,11 +1,22 @@
 # Python
-backend/venv/
 __pycache__/
+*.py[cod]
 
-# Environment
+# Virtual environments
+venv/
+backend/venv/
+
+# Environment variables
 .env
+
+# IDE
+.vscode/
+.idea/
 
 # OS
 .DS_Store
+Thumbs.db
 
-backend/data/
+# Runtime data
+backend/data/*
+!backend/data/.gitkeep
